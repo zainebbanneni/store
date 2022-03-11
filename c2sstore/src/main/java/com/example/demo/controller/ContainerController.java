@@ -7,17 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.exception.ContainerNotFoundException;
 import com.example.demo.model.Container;
-import com.example.demo.repo.ContainerRepository;
-import com.example.demo.repo.ImageRepository;
-import com.example.demo.repo.UserRepository;
 import com.example.demo.service.ContainerService;
 
 @RestController
@@ -25,17 +20,15 @@ import com.example.demo.service.ContainerService;
 public class ContainerController {
 
 	@Autowired
-	private ContainerRepository containerRepository;
-	private UserRepository userRepository;
-	private ImageRepository imageRepository;
-	@Autowired
 	private ContainerService containerService;
 
-	
-	@GetMapping("/container/{imageId}")
-	public String one(@PathVariable String imageId) {
+	@PostMapping("/request")
+	public String postController(@RequestBody LoginForm loginForm) {
+
+		loginForm.getImagename();
+		loginForm.getUserid();
 		String port = null;
-		String[] lines = { "docker run --name demo -d -P " + imageId };
+		String[] lines = { "docker run --name demo  -d -P " + loginForm.getImagename()};
 		String[] lines2 = {
 				"docker inspect --format '{{ (index (index .NetworkSettings.Ports \"80/tcp\") 0).HostPort }}' demo" };
 
@@ -45,6 +38,7 @@ public class ContainerController {
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
+
 		return String.valueOf(port);
 	}
 
@@ -67,41 +61,25 @@ public class ContainerController {
 
 	@Autowired
 	private TT tt;
-	private int port;
-
-	/*@GetMapping("/launch/{id}")
-	public Container getContainerById(Long id) {
-
-		String[] lines = { "docker run -d -P nginx" };
-		String[] lines2 = {
-				"docker inspect --format '{{ (index (index .NetworkSettings.Ports \"80/tcp\") 0).HostPort }}' bennani" };
-		try {
-			tt.executeCommands(lines);
-			port = tt.executeCommand(lines2);
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		Container container = containerRepository.findById(id).orElseThrow(() -> new ContainerNotFoundException(id));
-		containerRepository.save(container);
-		return container;
-
-		// set container attributes
-		/*
-		 * Container container= new Container();
-		 * 
-		 * container.setPort(8080); Optional<User> user= userRepository.findById((long)
-		 * 1); container.setUser(user); Image image =
-		 * imageRepository.findByName("store"); container.setImage(image);
-		 * containerRepository.save(container); return container;
-		 */
-
-	}
 
 	/*
-	 * public URL parseUrl(String s) throws Exception { URL u = new URL(s); return
-	 * new URI( u.getProtocol(), u.getAuthority(), u.getPath(), u.getQuery(),
-	 * u.getRef()). toURL(); }
+	 * @GetMapping("/launch/{id}") public Container getContainerById(Long id) {
+	 * 
+	 * String[] lines = { "docker run -d -P nginx" }; String[] lines2 = {
+	 * "docker inspect --format '{{ (index (index .NetworkSettings.Ports \"80/tcp\") 0).HostPort }}' bennani"
+	 * }; try { tt.executeCommands(lines); port = tt.executeCommand(lines2); } catch
+	 * (IOException | InterruptedException e) { e.printStackTrace(); }
+	 * 
+	 * Container container = containerRepository.findById(id).orElseThrow(() -> new
+	 * ContainerNotFoundException(id)); containerRepository.save(container); return
+	 * container;
+	 * 
+	 * // set container attributes /* Container container= new Container();
+	 * 
+	 * container.setPort(8080); Optional<User> user= userRepository.findById((long)
+	 * 1); container.setUser(user); Image image =
+	 * imageRepository.findByName("store"); container.setImage(image);
+	 * containerRepository.save(container); return container;
 	 */
 
-
+}

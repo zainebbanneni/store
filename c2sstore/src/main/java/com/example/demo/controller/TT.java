@@ -9,13 +9,10 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
 
-import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TT {
-
-	private String result;
 
 	// create a temp script to execute commands since Process builder can't execute
 	// complex commands
@@ -51,6 +48,8 @@ public class TT {
 			while ((line = reader.readLine()) != null) {
 				builder.append(line);
 				builder.append(System.getProperty("line.separator"));
+	            System.out.println(line);
+
 			}
 			System.out.println("**************");
 			System.out.println(builder.toString());
