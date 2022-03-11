@@ -37,20 +37,12 @@ public class TT {
 	public String executeCommands(String[] lines) throws IOException {
 		String port = null;
 		File tempScript = createTempScript(lines);
-
 		ProcessBuilder processBuilder = new ProcessBuilder("bash", tempScript.toString());
-		Process process;
-		// pb.inheritIO();
-
 		try {
-			// Start a new java process
-			process = processBuilder.start();
-
-			// Read and print the standard output stream of the process
+			Process process = processBuilder.start();
 			try (BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
 				String line;
 				while ((line = input.readLine()) != null) {
-					System.out.println(line);
 					port = line;
 				}
 			}
@@ -60,6 +52,5 @@ public class TT {
 			tempScript.delete();
 		}
 		return port;
-
 	}
 }
