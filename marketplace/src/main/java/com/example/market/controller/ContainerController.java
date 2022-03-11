@@ -39,10 +39,11 @@ public class ContainerController {
 	public String one(@RequestBody StoreRequest storeRequest) {
 
 		String port = null;
-		String[] lines = { "docker run --name demo -d -P " + storeRequest.getImageName() };
+		String containerName = tt.generateRoandomNames();
+		String[] lines = { "docker run --name " + containerName + " -d -P " + storeRequest.getImageName() };
 		String[] lines3 = {
-				"result=$( docker inspect --format \"{{ (index (index .NetworkSettings.Ports \\\"80/tcp\\\") 0).HostPort }}\" demo )\n"
-						+ "\n" + "echo  $result \n" + "" };
+				"result=$( docker inspect --format \"{{ (index (index .NetworkSettings.Ports \\\"80/tcp\\\") 0).HostPort }}\" "
+						+ containerName + " )\n" + "\n" + "echo  $result \n" + "" };
 
 		try {
 			tt.executeCommands(lines);
@@ -51,7 +52,7 @@ public class ContainerController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "http://localhost:"+port;
+		return "http://localhost:" + port;
 	}
 
 	// create container
@@ -75,4 +76,5 @@ public class ContainerController {
 	public String parser(@RequestBody String imageId, String userId) {
 		return userId;
 	}
+
 }
