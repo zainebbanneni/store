@@ -9,7 +9,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
 
-import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,44 +34,32 @@ public class TT {
 		return tempScript;
 	}
 
-	public String executeCommands(String[] lines) throws IOException, InterruptedException {
-
+	public String executeCommands(String[] lines) throws IOException {
+		String port = null;
 		File tempScript = createTempScript(lines);
 
+		ProcessBuilder processBuilder = new ProcessBuilder("bash", tempScript.toString());
+		Process process;
+		// pb.inheritIO();
+
 		try {
-			ProcessBuilder pb = new ProcessBuilder("bash", tempScript.toString());
-			pb.inheritIO();
-			Process process = pb.start();
-			process.waitFor();
+			// Start a new java process
+			process = processBuilder.start();
 
-			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			StringBuilder builder = new StringBuilder();
-			String line = null;
-			while ((line = reader.readLine()) != null) {
-				builder.append(line);
-				builder.append(System.getProperty("line.separator"));
+			// Read and print the standard output stream of the process
+			try (BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+				String line;
+				while ((line = input.readLine()) != null) {
+					System.out.println(line);
+					port = line;
+				}
 			}
-			System.out.println("**************");
-			System.out.println(builder.toString());
-			return builder.toString();
-
+		} catch (IOException e) {
+			e.printStackTrace();
 		} finally {
 			tempScript.delete();
 		}
-		
-		
+		return port;
+
 	}
-
-
-
-	// Call sample
-	// String sedCommand = "sed -e 's/{USER}/" + tfName.getText() + "/g'"
-//	                                + " -e 's/{NS}/" + selectedNS.getName() + "/g'"
-//	                                + " -e 's/{USER_EMAIL}/" + tfMail.getText() + "/g'"
-//	                                + " roles/adminAppBindings/" + selectedRole.getName() + ".yaml > roleFile";
-//	                        // +" >roleFile";
-	//
-//	                        String[] applycommands = {sedCommand, "kubectl apply -f roleFile"};
-	// CommandTools.executeCommands(applycommands);
-
 }
