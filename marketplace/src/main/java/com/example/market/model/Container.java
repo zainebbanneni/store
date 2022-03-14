@@ -1,5 +1,6 @@
 package com.example.market.model;
 
+import java.util.Date;
 import java.util.Optional;
 
 import javax.persistence.Entity;
@@ -14,11 +15,12 @@ public class Container {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String name;
-	private int port;
+	private String port;
 	@ManyToOne
 	private User user;
 	@ManyToOne
 	private Image image;
+	private Date date;
 
 	public Container() {
 	}
@@ -27,34 +29,26 @@ public class Container {
 		super();
 		this.name = name;
 	}
-	
-	
-	
 
-
-
-	public Container(int id, String name, int port, User user, Image image) {
+	public Container(String name, String port, User user, Image image) {
 		super();
-		this.id = id;
+		this.date = new Date();
 		this.name = name;
 		this.port = port;
 		this.user = user;
 		this.image = image;
 	}
 
-	public int getPort() {
+	public String getPort() {
 		return port;
 	}
 
-	public void setPort(int port) {
+	public void setPort(String port) {
 		this.port = port;
 	}
 
-
-
-
 	public int getId() {
-		return(int)id;
+		return (int) id;
 	}
 
 	public void setId(int id) {
@@ -68,8 +62,6 @@ public class Container {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-
 
 	public Image getImage() {
 		return image;
@@ -78,7 +70,6 @@ public class Container {
 	public void setImage(Image image) {
 		this.image = image;
 	}
-	
 
 	@Override
 	public String toString() {
@@ -88,11 +79,15 @@ public class Container {
 
 	public void setUser(Optional<User> user2) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
+	public Date getDate() {
+		return date;
+	}
 
-
-	
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 }

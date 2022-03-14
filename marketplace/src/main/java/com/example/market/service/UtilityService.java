@@ -1,4 +1,4 @@
-package com.example.market.controller;
+package com.example.market.service;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,7 +13,7 @@ import java.util.Random;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TT {
+public class UtilityService {
 
 	private String result;
 
@@ -91,4 +91,5 @@ public class TT {
 		return randomString;
 
 	  }
+	
 	}

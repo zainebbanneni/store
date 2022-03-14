@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.market.model.Container;
+import com.example.market.model.Image;
+import com.example.market.model.User;
 import com.example.market.repo.ContainerRepository;
 import com.example.market.repo.ImageRepository;
 import com.example.market.repo.UserRepository;
 import com.example.market.service.ContainerService;
+import com.example.market.service.UtilityService;
 
 @Controller
 @RestController
@@ -25,33 +28,43 @@ import com.example.market.service.ContainerService;
 public class ContainerController {
 
 	@Autowired
-	private TT tt;
+	private UtilityService utilityService;
 	private int port;
 
 	@Autowired
 	private ContainerRepository containerRepository;
+	@Autowired
 	private UserRepository userRepository;
+	@Autowired
 	private ImageRepository imageRepository;
 	@Autowired
 	private ContainerService containerService;
 
 	@PostMapping("/req")
-	public String one(@RequestBody StoreRequest storeRequest) {
+	public String createContainer(@RequestBody StoreRequest storeRequest) {
 
 		String port = null;
-		String containerName = tt.generateRoandomNames();
+		String containerName = utilityService.generateRoandomNames();
 		String[] lines = { "docker run --name " + containerName + " -d -P " + storeRequest.getImageName() };
 		String[] lines3 = {
 				"result=$( docker inspect --format \"{{ (index (index .NetworkSettings.Ports \\\"80/tcp\\\") 0).HostPort }}\" "
 						+ containerName + " )\n" + "\n" + "echo  $result \n" + "" };
 
 		try {
-			tt.executeCommands(lines);
-			port = tt.executeCommands(lines3);
+			utilityService.executeCommands(lines);
+			port = utilityService.executeCommands(lines3);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		User val1 = new User();
+		Image val2 = new Image();
+		Container container = new Container(containerName, port, val1, val2);
+
+		imageRepository.save(val2);
+		userRepository.save(val1);
+		containerRepository.save(container);
+
 		return "http://localhost:" + port;
 	}
 
