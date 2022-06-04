@@ -8,4 +8,5 @@ import com.example.market.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+
 }

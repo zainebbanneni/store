@@ -22,7 +22,7 @@ public class ContainerController {
 	@Autowired
 	private ContainerService containerService;
 
-	@PostMapping("/request")
+	/*@PostMapping("/request")
 	public String postController(@RequestBody LoginForm loginForm) {
 
 		loginForm.getImagename();
@@ -40,7 +40,7 @@ public class ContainerController {
 		}
 
 		return String.valueOf(port);
-	}
+	}*/
 
 	// create container
 	@PostMapping("/add")

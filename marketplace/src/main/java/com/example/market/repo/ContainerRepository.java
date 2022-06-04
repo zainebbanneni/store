@@ -9,8 +9,13 @@ import com.example.market.model.Container;
 
 @Repository
 public interface ContainerRepository extends JpaRepository<Container, Long> {
-	
+
 	Optional<Container> findContainerById(Long id);
 
+	void deleteContainerById(Long id);
+	
+	Optional<Container> findContainerByName(String containerName);
+	
+	void deleteContainerByName(String containerName);
 
 }

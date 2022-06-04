@@ -17,7 +17,7 @@ public class Project implements Serializable {
 	private long id;
 	private String name;
 	private String description;
-	private String imageUrl;
+	private String imageName;
 	public long getId() {
 		return id;
 	}
@@ -37,26 +37,26 @@ public class Project implements Serializable {
 		this.description = description;
 	}
 	
-	public String getImageUrl() {
-		return imageUrl;
+	public String getImageName() {
+		return imageName;
 	}
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+	public void setImageUrl(String imageName) {
+		this.imageName = imageName;
 	}
 	
-	public Project(long id, String name, String description, String imageUrl) {
+	public Project(long id, String name, String description, String imageName) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.imageUrl = imageUrl;
+		this.imageName = imageName;
 	}
 
-	public Project(String name, String description, String imageUrl) {
+	public Project(String name, String description, String imageName) {
 		super();
 		this.name = name;
 		this.description = description;
-		this.imageUrl = imageUrl;
+		this.imageName = imageName;
 	}
 	public Project() {
 		
@@ -65,7 +65,7 @@ public class Project implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Project [id=" + id + ", name=" + name + ", description=" + description + ", imageUrl=" + imageUrl + "]";
+		return "Project [id=" + id + ", name=" + name + ", description=" + description + ", imageName=" + imageName + "]";
 	}
 
 	

@@ -8,15 +8,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Image {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private String description ; 
+	private String description;
 	
 	@OneToMany(mappedBy = "image")
+	@JsonIgnore
 	private List<Container>  containers;
 
 	public Image() {
@@ -25,6 +28,13 @@ public class Image {
 	public Image(String name) {
 		super();
 		this.name = name;
+	}
+
+	public Image(Long id, String name, String description) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
 	}
 
 	public List<Container> getContainers() {
@@ -50,5 +60,14 @@ public class Image {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 
 }

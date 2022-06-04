@@ -1,20 +1,41 @@
 package com.example.market.controller;
 
+import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.example.market.model.Container;
+import com.example.market.model.StoreRequest;
 import com.example.market.model.User;
+import com.example.market.repo.ContainerRepository;
+import com.example.market.repo.ImageRepository;
+import com.example.market.repo.UserRepository;
+import com.example.market.service.ContainerService;
 import com.example.market.service.UserService;
+import com.example.market.service.UtilityService;
 @RestController
 @RequestMapping("/user")
 public class UserController {
 	
+@Autowired
+private UtilityService utilityService;
 private final UserService userService;
+
+@Autowired
+private UserRepository userRepository;
+@Autowired
+private ContainerRepository containerRepository;
+
+
+
 	
 
     public UserController(UserService userService) {
@@ -37,5 +58,8 @@ private final UserService userService;
 
 
     }
+    
+   
+	
 
 }

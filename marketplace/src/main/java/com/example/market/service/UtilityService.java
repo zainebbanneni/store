@@ -12,8 +12,13 @@ import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
+import com.example.market.repo.ContainerRepository;
+
 @Service
 public class UtilityService {
+	
+    private ContainerRepository containerRepo;
+
 
 	private String result;
 
@@ -91,5 +96,9 @@ public class UtilityService {
 		return randomString;
 
 	  }
+	/*public void deleteContainer(Long id){
+        containerRepo.deleteContainerById(id);
+        
+    }*/
 	
 	}

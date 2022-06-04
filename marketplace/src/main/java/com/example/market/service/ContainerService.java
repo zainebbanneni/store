@@ -16,31 +16,36 @@ import com.example.market.repo.ContainerRepository;
 public class ContainerService {
 	private final ContainerRepository containerRepository;
 
-    @Autowired
-    public ContainerService(ContainerRepository containerRepository) {
-        this.containerRepository = containerRepository;
-    }
-    
-    public void addContainer(Container container) {
+	@Autowired
+	public ContainerService(ContainerRepository containerRepository) {
+		this.containerRepository = containerRepository;
+	}
+
+	public void addContainer(Container container) {
 		containerRepository.save(container);
+
+	}
+
+	public List<Container> findAllContainers() {
+		return containerRepository.findAll();
+	}
+
+	public Container findContainerById(Long id) {
+		return containerRepository.findContainerById(id)
+				.orElseThrow(() -> new UserNotFoundException("Container by id " + id + " was not found"));
+	}
+
+	public Container findContainerByName(String containerName) {
+		return containerRepository.findContainerByName(containerName)
+				.orElseThrow(() -> new UserNotFoundException("Container by id " + containerName + " was not found"));
+	}
+
+	public void delete(String containerName) {
+		containerRepository.deleteContainerByName(containerName);
+		
+		
+
 		
 	}
-    
-    
-    
-    public List<Container> findAllContainers() {
-        return containerRepository.findAll();
-    }
-    
-    public Container findContainerById(Long id) {
-        return containerRepository.findContainerById(id)
-                .orElseThrow(() -> new UserNotFoundException("Container by id " + id + " was not found"));
-    }
-
-
-
-	
-
-	
 
 }

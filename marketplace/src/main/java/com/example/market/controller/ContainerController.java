@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.market.model.Container;
 import com.example.market.model.Image;
+import com.example.market.model.StoreRequest;
 import com.example.market.model.User;
 import com.example.market.repo.ContainerRepository;
 import com.example.market.repo.ImageRepository;
@@ -25,6 +29,7 @@ import com.example.market.service.UtilityService;
 @Controller
 @RestController
 @RequestMapping("/container")
+@CrossOrigin
 public class ContainerController {
 
 	@Autowired
@@ -40,8 +45,10 @@ public class ContainerController {
 	@Autowired
 	private ContainerService containerService;
 
+	private String containerName;
+
 	@PostMapping("/req")
-	public String createContainer(@RequestBody StoreRequest storeRequest) {
+	private String createContainer(@RequestBody StoreRequest storeRequest) {
 
 		String port = null;
 		String containerName = utilityService.generateRoandomNames();
@@ -64,8 +71,27 @@ public class ContainerController {
 		imageRepository.save(val2);
 		userRepository.save(val1);
 		containerRepository.save(container);
+		
+		return port;
 
-		return "http://localhost:" + port;
+		//return "http://localhost:" + port;
+	}
+
+	@DeleteMapping("/delete/{containerName}")
+	public void stopContainer(@PathVariable String containerName) {
+		String[] lines = { "docker stop " + containerName };
+		String[] lines2 = { "docker rm " + containerName };
+
+		try {
+			utilityService.executeCommands(lines);
+			utilityService.executeCommands(lines2);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Container container = containerService.findContainerByName(containerName);
+		containerService.delete(containerName);
+
 	}
 
 	// create container
@@ -83,11 +109,6 @@ public class ContainerController {
 	public ResponseEntity<List<Container>> getAllContainers() {
 		List<Container> containers = containerService.findAllContainers();
 		return new ResponseEntity<>(containers, HttpStatus.OK);
-	}
-
-	@PostMapping("/parseJson/{imageId}/{userId}")
-	public String parser(@RequestBody String imageId, String userId) {
-		return userId;
 	}
 
 }

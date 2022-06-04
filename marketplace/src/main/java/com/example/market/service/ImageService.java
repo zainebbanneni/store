@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.market.exception.UserNotFoundException;
+import com.example.market.model.Container;
 import com.example.market.model.Image;
 import com.example.market.repo.ImageRepository;
 
@@ -33,5 +34,12 @@ public class ImageService {
         return imageRepository.findImageById(id)
                 .orElseThrow(() -> new UserNotFoundException("User by id " + id + " was not found"));
     }
+    
+    public Image findImageByName(String imageName) {
+		return imageRepository.findImageByName(imageName)
+				.orElseThrow(() -> new UserNotFoundException("Image by name " + imageName + " was not found"));
+	}
+    
 
+    
 }
