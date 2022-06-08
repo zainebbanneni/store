@@ -1,0 +1,10 @@
+.submit-form {
+    max-width: 400px;
+    margin: auto;
+  }
+
+  .btn-primary.btn-inverse, .btn-warning.btn-inverse {
+    color: #000;
+    background-color: #f16e00;
+    border-color: #f16e00;
+}
