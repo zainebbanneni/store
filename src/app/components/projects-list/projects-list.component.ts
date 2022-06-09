@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
+import { StoreRequest } from 'src/app/models/storeRequest.model';
+import { ContainerService } from 'src/app/services/container.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,8 +16,9 @@ export class ProjectsListComponent implements OnInit {
   currentProject: Project = {};
   currentIndex = -1;
   name = '';
+  
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService, private containerService: ContainerService, private router: Router) { }
 
   ngOnInit(): void {
     this.retrieveProjects();
@@ -60,6 +64,7 @@ searchName(): void {
       error: (e) => console.error(e)
     });
 }
+
   }
 
 

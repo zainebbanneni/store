@@ -18,6 +18,9 @@ import { ScrollTopModule } from 'ng-boosted';
 import { AddProjectComponent } from './components/add-project/add-project.component';
 import { ProjectDetailsComponent } from './components/project-details/project-details.component';
 import { ProjectsListComponent } from './components/projects-list/projects-list.component';
+import { DemoComponent } from './components/demo/demo.component';
+import { ContainerService } from 'src/app/services/container.service';
+import { ProjectService } from 'src/app/services/project.service';
 
 
 
@@ -33,7 +36,8 @@ import { ProjectsListComponent } from './components/projects-list/projects-list.
     BoardUserComponent,
     AddProjectComponent,
     ProjectDetailsComponent,
-    ProjectsListComponent
+    ProjectsListComponent,
+    DemoComponent
    
   ],
   imports: [
@@ -46,7 +50,7 @@ import { ProjectsListComponent } from './components/projects-list/projects-list.
     ],
 
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-  providers: [authInterceptorProviders],
+  providers: [ProjectService, ContainerService, authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

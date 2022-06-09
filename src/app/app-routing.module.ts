@@ -10,6 +10,7 @@ import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { ProjectDetailsComponent } from 'src/app/components/project-details/project-details.component';
 import { AddProjectComponent } from 'src/app/components/add-project/add-project.component';
 import { ProjectsListComponent } from 'src/app/components/projects-list/projects-list.component';
+import { DemoComponent } from 'src/app/components/demo/demo.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -22,7 +23,9 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'admin/projects', component: ProjectsListComponent },
   { path: 'admin/projects/:id', component: ProjectDetailsComponent  },
-  { path: 'admin/add', component: AddProjectComponent }
+  { path: 'admin/add', component: AddProjectComponent },
+  {path: 'user/create-Cont/:id', component: DemoComponent}
+  
 ];
 
 @NgModule({
