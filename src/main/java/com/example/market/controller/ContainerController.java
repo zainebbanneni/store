@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.market.model.Container;
 import com.example.market.model.Image;
+import com.example.market.model.Project;
 import com.example.market.model.StoreRequest;
 import com.example.market.model.User;
 import com.example.market.repo.ContainerRepository;
@@ -47,6 +48,9 @@ public class ContainerController {
 
 	private String containerName;
 
+	
+
+	
 	@PostMapping("/req")
 	private String createContainer(@RequestBody StoreRequest storeRequest) {
 
@@ -76,8 +80,61 @@ public class ContainerController {
 
 		//return "http://localhost:" + port;
 	}
+	
+	@PostMapping("/compose")
+	private String startCompose(@RequestBody String composeURL) {
+		
+		String[] lines = { " docker-compose -f "+ composeURL +"  up -d "  };
+		
+		System.out.println(lines[0]);
 
-	/*@DeleteMapping("/delete/{containerName}")
+		try {
+			utilityService.executeCommands(lines);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		
+		return null;
+	}
+	
+	@PostMapping("/composestop")
+	private String stopCompose(@RequestBody String composeURL) {
+
+		String[] lines = { " docker-compose -f "+ composeURL +"  down "  };
+
+		try {
+			utilityService.executeCommands(lines);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		
+		return null;
+	}
+
+
+	@GetMapping("/containers")
+	private String getContainer() {
+
+		String[] lines = { " docker ps "  };
+
+		try {
+			utilityService.executeCommands(lines);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		
+		return null;
+	}
+	
+	
+	
+	@DeleteMapping("/delete/{containerName}")
 	public void stopContainer(@PathVariable String containerName) {
 		String[] lines = { "docker stop " + containerName };
 		String[] lines2 = { "docker rm " + containerName };
@@ -94,7 +151,7 @@ public class ContainerController {
 
 	}
 
-	// create container
+	/*// create container
 	@PostMapping("/add")
 	public ResponseEntity<Container> addContainer(@RequestBody Container C) {
 

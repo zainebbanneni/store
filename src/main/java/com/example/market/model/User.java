@@ -1,21 +1,18 @@
 package com.example.market.model;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -35,9 +32,12 @@ public class User {
 	private String email;
 	@Size(max = 120)
 	private String password;
+    private String phone;
+	private String imageUrl;
+	private String userCode;
 	@ManyToMany(fetch = FetchType.LAZY)
-
 	private Set<Role> roles = new HashSet<>();
+	
 	public User() {
 	}
 	public User(String username, String email, String password) {
@@ -45,6 +45,8 @@ public class User {
 		this.email = email;
 		this.password = password;
 	}
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -75,5 +77,28 @@ public class User {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getUserCode() {
+		return userCode;
+	}
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
+	}
+	
+	
+	
+	
+	
 
 }

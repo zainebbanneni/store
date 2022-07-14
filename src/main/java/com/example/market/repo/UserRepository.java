@@ -10,6 +10,11 @@ import com.example.market.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+	
+	void deleteUserById(Long id);
+
+    Optional<User> findUserById(Long id);
+	
 	Optional<User> findByUsername(String username);
 	Boolean existsByUsername(String username);
 	Boolean existsByEmail(String email);

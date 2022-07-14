@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.market.exception.UserNotFoundException;
-import com.example.market.model.Container;
 import com.example.market.model.Image;
 import com.example.market.repo.ImageRepository;
 
